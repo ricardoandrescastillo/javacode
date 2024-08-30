@@ -1,6 +1,7 @@
 package com.practice.java8;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,8 +32,8 @@ public class StreamsApp {
         System.out.println("Filter");
 
         return list.stream()
-               .filter(name -> name.startsWith("R") || name.startsWith("J"))
-               .collect(Collectors.toList());
+                .filter(name -> name.startsWith("R") || name.startsWith("J"))
+                .collect(Collectors.toList());
     }
 
     public void sort() {
@@ -42,7 +43,7 @@ public class StreamsApp {
 
     public List<Integer> transform() {
         System.out.println("Transform");
-        return numbers.stream().map(number -> Integer.parseInt(number)+1).collect(Collectors.toList());
+        return numbers.stream().map(number -> Integer.parseInt(number) + 1).collect(Collectors.toList());
     }
 
     public void limit() {
@@ -55,6 +56,7 @@ public class StreamsApp {
         long x = list.stream().count();
         System.out.println(x);
     }
+
     public List<String> mix() {
         System.out.println("Mix");
         return list.stream()
@@ -65,6 +67,22 @@ public class StreamsApp {
                 .collect(Collectors.toList());
     }
 
+    public void flatMap() {
+
+
+    List<List<String>> listOfLists = Arrays.asList(
+            Arrays.asList("A", "B", "C"),
+            Arrays.asList("D", "E", "F"),
+            Arrays.asList("G", "H", "I")
+    );
+
+    List<String> flattenedList = listOfLists.stream()
+            .flatMap(List::stream)  // Flatten the stream of lists into a stream of strings
+            .collect(Collectors.toList());
+
+        System.out.println(flattenedList);
+    }
+
     public static void main(String[] args) {
         StreamsApp app = new StreamsApp();
         app.filter().forEach(System.out::println);
@@ -73,5 +91,6 @@ public class StreamsApp {
         app.limit();
         app.count();
         app.mix().forEach(System.out::println);
+        app.flatMap();
     }
 }
